@@ -5,7 +5,6 @@ const db = init.createDbConnection();
 class WordController {
     static addWord(state, intent, data, bot) {
         // Команда добавления слова
-        console.log(data.text.split(" "));
         let [eng, ru] = data.text.split(" ");
         // Ищем английское слово в таблице
         if (eng === null || ru === null) {
@@ -39,6 +38,41 @@ class WordController {
             }
         })
     }
+
+    static delWord(state, intent, data, bot) {
+        //Команда для удаления слов
+        let eng = data.text;
+        if (eng === null) {
+            let resp = "Неккоректная команда! Для списка команд, используйте /help";
+            bot.sendMessage(data.chatId, resp);
+            return;
+        }
+        // ищем искомое слово в словаре пользователя
+        db.query("SELECT * FROM words where eng_word = ? && user_id = ?", [eng, data.user.id], function(err, result, fields) {
+            if (err) {
+                console.log(err);
+                const resp = "Ошибка при доступе к бд! Бот не работает";
+                bot.sendMessage(data.chatId, resp);
+                return;
+            }
+            if (result.length != 0) {
+                db.query("DELETE FROM words where eng_word = ? && user_id = ?", [eng, data.user.id], function (err, result, fields) {
+                    if (err) {
+                        console.log(err);
+                        const resp = "Ошибка при доступе к бд! Бот не работает";
+                        bot.sendMessage(data.chatId, resp);
+                        return;
+                    }
+                    let resp = "Слово удалено из словаря";
+                    bot.sendMessage(data.chatId, resp);
+                })
+            } else {
+                let resp = "Искомое слово не найдено в вашем словаре";
+                bot.sendMessage(data.chatId, resp);
+            }
+        })
+    }
+
 
 }
 

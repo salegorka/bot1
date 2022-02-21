@@ -13,6 +13,7 @@ const router = new Router();
 
 router.addRoute('registration', 'reg', UserController.registrate);
 router.addRoute('start', 'add', WordController.addWord);
+router.addRoute('start', 'del',WordController.delWord);
 
 // создаем бота
 const bot = new TelegramBot(config.token, {polling: true});
