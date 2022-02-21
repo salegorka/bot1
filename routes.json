@@ -6,5 +6,13 @@
                 "intent": "reg"
             }
         ]
+    },
+    {
+        "state": "start",
+        "intents": [
+            {
+                "intent": "add"
+            }
+        ]
     }
 ]

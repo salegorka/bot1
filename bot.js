@@ -2,6 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const Init  = require("./classes/Init");
 const Router = require("./classes/Router");
 const UserController = require("./classes/UserController");
+const WordController = require("./classes/WordController");
 
 const init = new Init(); 
 const config = init.loadConfig();
@@ -11,6 +12,7 @@ const router = new Router();
 // создаем маршруты
 
 router.addRoute('registration', 'reg', UserController.registrate);
+router.addRoute('start', 'add', WordController.addWord);
 
 // создаем бота
 const bot = new TelegramBot(config.token, {polling: true});
@@ -54,7 +56,8 @@ bot.on('message', (msg) => {
             let callback = router.route(state, intent);
             let data = {
                 text,
-                chatId
+                chatId,
+                user: result[0]
             };
             console.log(callback);
             callback(state, intent, data, bot);
