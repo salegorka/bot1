@@ -1,0 +1,10 @@
+[
+    {
+        "state": "registration",
+        "intents": [
+            {
+                "intent": "reg"
+            }
+        ]
+    }
+]
