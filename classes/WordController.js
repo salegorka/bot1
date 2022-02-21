@@ -73,7 +73,29 @@ class WordController {
         })
     }
 
-
+    static listWord(state, intent, data, bot) {
+        // Команда для спсика слов
+        db.query("SELECT * FROM words where user_id = ?", [data.user.id], function (err, result, fields) {
+            if (err) {
+                console.log(err);
+                const resp = "Ошибка при доступе к бд! Бот не работает";
+                bot.sendMessage(data.chatId, resp);
+                return;
+            }
+            if (result.length != 0) {
+                let answer = "";
+                result.forEach((el) => {
+                    answer += el.eng_word + " ";
+                })
+                let resp = "Список ваших слов " + answer;
+                bot.sendMessage(data.chatId, resp);
+            }
+            else {
+                let resp = "В вашем словаре, не найдено слов";
+                bot.sendMessage(data.chatId, resp);
+            }
+        })
+    }
 }
 
 module.exports = WordController;

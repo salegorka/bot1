@@ -14,6 +14,7 @@ const router = new Router();
 router.addRoute('registration', 'reg', UserController.registrate);
 router.addRoute('start', 'add', WordController.addWord);
 router.addRoute('start', 'del',WordController.delWord);
+router.addRoute('start', 'list', WordController.listWord);
 
 // создаем бота
 const bot = new TelegramBot(config.token, {polling: true});
@@ -26,18 +27,22 @@ bot.on('message', (msg) => {
     // получаем intent из сообщения
 
     let userMsg = msg.text;
-    console.log(userMsg);
     let result = userMsg.match(/\/([a-zA-Z]+) (.+)/);
     let intent = "";
     let text = "";
 
     if (result) {
         intent = result[1];
-        text = result[2]; 
+        text = result[2];
     } else {
-        let resp = "Непонятная команда. Список комманд /help";
-        bot.sendMessage(chatId, resp);
-        return;
+        let result = userMsg.match(/\/([a-zA-Z]+)/);
+        if (result) {
+            intent = result[1];
+        } else {
+            let resp = "Непонятная команда. Список комманд /help";
+            bot.sendMessage(chatId, resp);
+            return;
+        }
     }
     
 

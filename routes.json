@@ -15,6 +15,9 @@
             },
             {
                 "intent": "del"
+            },
+            {
+                "intent": "list"
             }
         ]
     }
