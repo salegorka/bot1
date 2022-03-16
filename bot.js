@@ -3,6 +3,7 @@ const Init  = require("./classes/Init");
 const Router = require("./classes/Router");
 const UserController = require("./classes/UserController");
 const WordController = require("./classes/WordController");
+const HelpController = require("./classes/HelpController");
 
 const init = new Init(); 
 const config = init.loadConfig();
@@ -12,6 +13,7 @@ const router = new Router();
 // создаем маршруты
 
 router.addRoute('registration', 'reg', UserController.registrate);
+router.addRouter('registration', 'help', HelpController.regHelp);
 router.addRoute('start', 'add', WordController.addWord);
 router.addRoute('start', 'del',WordController.delWord);
 router.addRoute('start', 'list', WordController.listWord);

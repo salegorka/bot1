@@ -4,6 +4,9 @@
         "intents": [
             {
                 "intent": "reg"
+            },
+            {
+                "intent": "help"
             }
         ]
     },
@@ -18,6 +21,20 @@
             },
             {
                 "intent": "list"
+            },
+            {
+                "intent": "learn"
+            }
+        ]
+    },
+    {
+        "state": "learn",
+        "intents": [
+            {
+                "intent": "answer"
+            },
+            {
+                "intent": "stop"
             }
         ]
     }
